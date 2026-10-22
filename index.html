@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ff8700">
+<meta name="description" content="Une surprise d'anniversaire pleine d'amour, de souvenirs et de promesses de Dieu pour Elisa.">
+<title>Happy Birthday Elisa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{--orange:#ff8700;--ink:#111;--cream:#f8eee0;--muted:#aaa;--radius:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:25px}
+body{background:var(--orange);color:var(--ink);font-family:"DM Sans",sans-serif;overflow-x:hidden}
+body.modal-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+img,video{max-width:100%}
+::selection{background:var(--orange);color:var(--ink)}
+.skip-link{position:fixed;top:-60px;left:15px;background:white;padding:12px;z-index:10000}
+.skip-link:focus{top:15px}
+.loader{position:fixed;inset:0;background:var(--ink);color:white;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .7s,visibility .7s}
+.loader.hide{opacity:0;visibility:hidden;pointer-events:none}
+.loader-chicken{font-size:70px;animation:chickenLoader 1s infinite alternate ease-in-out}
+.loader p{margin-top:15px;font-size:12px;text-transform:uppercase;letter-spacing:3px}
+@keyframes chickenLoader{from{transform:rotate(-15deg) scale(.9)}to{transform:rotate(15deg) scale(1.1)}}
+.navbar{position:absolute;width:100%;top:0;left:0;padding:25px 6%;display:flex;align-items:center;justify-content:space-between;z-index:100;color:white}
+.logo{font-size:17px;font-weight:900;letter-spacing:-1px;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;background:white;border-radius:50%}
+.navbar nav{display:flex;gap:30px}
+.navbar nav a{font-size:10px;font-weight:800;letter-spacing:1px;position:relative}
+.navbar nav a:after{content:"";position:absolute;left:0;bottom:-7px;width:0;height:2px;background:white;transition:.3s}
+.navbar nav a:hover:after,.navbar nav a:focus-visible:after{width:100%}
+.menu-btn{width:45px;height:45px;border:1px solid #ffffff80;border-radius:50%;background:#0002;display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;cursor:pointer}
+.menu-btn span{width:17px;height:2px;background:#fff}
+.mobile-menu{position:fixed;inset:0;background:var(--ink);z-index:90;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:25px;transform:translateY(-100%);visibility:hidden;transition:transform .5s cubic-bezier(.77,0,.18,1),visibility .5s}
+.mobile-menu.open{transform:translateY(0);visibility:visible}
+.mobile-menu a{color:white;font-family:"Bebas Neue",sans-serif;font-size:48px}
+.hero{min-height:780px;position:relative;overflow:hidden;background:#171717;border-radius:0 0 45px 45px;color:white;display:flex;align-items:center;padding:120px 7% 100px}
+.hero:before{content:"";position:absolute;inset:0;opacity:.12;background-image:radial-gradient(circle at 20% 20%,white 0 1px,transparent 1px),radial-gradient(circle at 80% 70%,white 0 1px,transparent 1px);background-size:80px 80px;pointer-events:none}
+.hero:after{content:"";position:absolute;width:650px;height:650px;border-radius:50%;background:var(--orange);filter:blur(150px);opacity:.28;right:-200px;top:-250px}
+.hero-content{width:52%;position:relative;z-index:5}
+.mini-title{font-size:11px;letter-spacing:2px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:12px}
+.mini-title span{width:30px;height:2px;background:var(--orange)}
+.hero h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(80px,10vw,165px);line-height:.78;letter-spacing:-4px;text-transform:uppercase}
+.hero h1 span,.hero h1 strong{display:block}
+.hero h1 span{color:var(--orange)}
+.hero h1 strong{color:white;font-weight:400}
+.hero-description{max-width:360px;margin-top:35px;font-size:15px;line-height:1.7;color:#ccc}
+.hero-actions{margin-top:35px;display:flex;align-items:center;gap:25px;flex-wrap:wrap}
+.main-btn{background:var(--orange);color:var(--ink);padding:14px 20px 14px 24px;border-radius:40px;font-size:10px;font-weight:900;letter-spacing:1px;display:flex;gap:18px;align-items:center;transition:.3s}
+.main-btn span{width:28px;height:28px;background:var(--ink);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px}
+.main-btn:hover{transform:translateY(-4px);box-shadow:0 15px 30px #ff870040}
+.birthday-badge{width:90px;height:90px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;transform:rotate(-12deg);animation:badgeSpin 12s linear infinite}
+.badge-inner{width:68px;height:68px;border:1px dashed var(--ink);border-radius:50%;color:var(--ink);display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:900}
+@keyframes badgeSpin{to{transform:rotate(348deg)}}
+.hero-image-wrapper{position:absolute;right:5%;bottom:70px;width:46%;height:520px;z-index:4}
+.hero-image-wrapper:before{content:"";position:absolute;inset:30px -20px -20px 30px;border:2px solid var(--orange);border-radius:30px;transform:rotate(5deg)}
+.hero-image{width:100%;height:100%;object-fit:cover;border-radius:30px;position:relative;z-index:2;filter:saturate(1.1) contrast(1.04);transform:rotate(2deg);box-shadow:0 30px 60px #0007}
+.image-shadow{position:absolute;width:70%;height:80%;right:-30px;bottom:-20px;background:var(--orange);filter:blur(60px);opacity:.3}
+.image-label{position:absolute;right:-20px;top:45px;background:var(--orange);color:var(--ink);z-index:5;padding:12px 18px;transform:rotate(7deg);display:flex;flex-direction:column}
+.image-label span{font-size:8px;letter-spacing:2px}.image-label strong{font-size:17px}
+.floating-piece{position:absolute;z-index:6;font-size:65px;filter:drop-shadow(0 15px 10px #0006);animation:floatChicken 4s ease-in-out infinite;pointer-events:none}
+.piece-one{top:15%;right:43%;transform:rotate(-25deg)}.piece-two{bottom:8%;left:5%;font-size:85px;animation-delay:1s}.piece-three{top:37%;right:2%;font-size:75px;animation-delay:2s}
+@keyframes floatChicken{0%,100%{translate:0 0;rotate:-10deg}50%{translate:0 -18px;rotate:10deg}}
+.spark{position:absolute;width:5px;height:5px;background:var(--orange);border-radius:50%;animation:spark 2s infinite alternate}
+.spark-1{top:20%;left:45%}.spark-2{top:35%;left:8%}.spark-3{bottom:20%;right:45%}.spark-4{bottom:30%;right:10%}
+@keyframes spark{from{opacity:.2;scale:.5}to{opacity:1;scale:2}}
+.hero-bottom-text{position:absolute;bottom:22px;left:7%;right:7%;display:flex;justify-content:space-between;border-top:1px solid #ffffff33;padding-top:15px;color:#aaa;font-size:9px;letter-spacing:3px;font-weight:800}
+.marquee{background:var(--orange);overflow:hidden;padding:20px 0;border-bottom:2px solid var(--ink)}
+.marquee-track{display:flex;width:max-content;align-items:center;gap:30px;animation:marquee 24s linear infinite}
+.marquee span{font-family:"Bebas Neue",sans-serif;font-size:52px;letter-spacing:1px;white-space:nowrap}
+.marquee i{font-size:28px;font-style:normal}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.intro{min-height:580px;background:var(--cream);color:var(--ink);padding:120px 8%;position:relative;display:flex;align-items:center;overflow:hidden}
+.section-number{position:absolute;left:8%;top:50px;font-size:10px;font-weight:900;letter-spacing:3px}
+.intro-content{max-width:850px;position:relative;z-index:3}
+.eyebrow{font-size:10px;font-weight:900;letter-spacing:3px;margin-bottom:25px}
+.intro h2,.promises h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(60px,8vw,120px);line-height:.85;letter-spacing:-2px}
+.intro h2 span,.promises h2 span{color:var(--orange)}
+.intro-content>p:last-child{max-width:600px;margin-top:32px;font-size:16px;line-height:1.8;color:#555}
+.intro-chicken{position:absolute;right:3%;bottom:-100px;width:370px;height:370px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;transform:rotate(-15deg)}
+.intro-chicken div{font-size:155px;transform:rotate(15deg)}
+/* SCRIPTURE SECTION */
+.promises{background:var(--cream);color:var(--ink);padding:110px 7% 100px;position:relative;overflow:hidden;border-top:1px solid #1111}
+.promises-header{max-width:850px;margin:0 auto 55px;text-align:center;position:relative;z-index:1}
+.promises-header>p:last-child{max-width:650px;margin:25px auto 0;color:#555;line-height:1.8;font-size:15px}
+.promise-feature{position:relative;max-width:1050px;margin:0 auto 25px;padding:65px 8%;background:var(--orange);border-radius:var(--radius);text-align:center;overflow:hidden}
+.promise-cross{display:inline-flex;width:42px;height:42px;align-items:center;justify-content:center;border:1px solid #1116;border-radius:50%;font-size:22px;margin-bottom:22px}
+.promise-label,.promise-reference{font-size:10px;font-weight:900;letter-spacing:2px}
+.promise-feature blockquote{font-family:"Bebas Neue",sans-serif;font-size:clamp(32px,5vw,62px);line-height:1.05;max-width:800px;margin:22px auto;position:relative;z-index:1}
+.promise-feature .promise-reference{margin-top:25px}
+.promise-number{position:absolute;right:-5px;bottom:-75px;font-family:"Bebas Neue",sans-serif;font-size:240px;line-height:1;color:#11109;pointer-events:none}
+.promise-grid{max-width:1050px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.promise-card{background:#fffaf2;border:1px solid #11112;border-radius:22px;padding:28px 25px;min-height:310px;display:flex;flex-direction:column;align-items:flex-start;transition:transform .3s,box-shadow .3s}
+.promise-card:hover{transform:translateY(-6px);box-shadow:0 18px 35px #11110c}
+.promise-index{font-size:9px;letter-spacing:2px;font-weight:900;color:#777}
+.promise-symbol{font-size:24px;color:var(--orange);margin:24px 0 15px}
+.promise-card h3{font-family:"Bebas Neue",sans-serif;font-size:30px;line-height:1.02;margin-bottom:17px}
+.promise-card p{font-size:13px;line-height:1.8;color:#555}
+.promise-card .promise-reference{margin-top:auto;padding-top:25px;font-size:9px}
+.promise-card-dark{background:var(--ink);color:white}
+.promise-card-dark .promise-index,.promise-card-dark p{color:#bbb}
+.promise-card-dark .promise-symbol,.promise-card-dark .promise-reference{color:var(--orange)}
+.promises-footer{text-align:center;margin-top:35px;font-size:9px;letter-spacing:3px;font-weight:900;color:#777}
+/* MOMENTS */
+.moments{background:var(--ink);color:#fff;padding:120px 7%}
+.section-heading{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:65px;gap:25px}
+.section-heading h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(70px,9vw,130px);line-height:.8;letter-spacing:-2px}
+.section-heading h2 span{color:var(--orange)}
+.section-heading>p{max-width:280px;color:#999;font-size:13px;line-height:1.7}
+.gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.gallery-item{position:relative;overflow:hidden;border-radius:22px;background:#222;min-height:300px;cursor:zoom-in;isolation:isolate}
+.gallery-item:nth-child(1){grid-column:span 7;height:480px}.gallery-item:nth-child(2){grid-column:span 5;height:480px}
+.gallery-item:nth-child(n+3){grid-column:span 4;height:340px}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .7s}
+.gallery-item:hover img,.gallery-item:focus-visible img{transform:scale(1.06)}
+.gallery-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;padding:24px;background:linear-gradient(transparent,#000b);opacity:0;transition:opacity .35s}
+.gallery-item:hover .gallery-overlay,.gallery-item:focus-visible .gallery-overlay{opacity:1}
+.gallery-overlay span{font-size:10px;letter-spacing:1.5px;font-weight:800}
+.gallery-item:focus-visible{outline:3px solid var(--orange);outline-offset:4px}
+/* VIDEO */
+.video-section{background:var(--orange);padding:110px 7%;position:relative;overflow:hidden}
+.video-title{text-align:center;margin-bottom:55px}
+.video-title h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(70px,10vw,150px);line-height:.8}
+.video-container{max-width:1100px;min-height:300px;height:min(58vw,600px);margin:auto;position:relative}
+.video-container video{width:100%;height:100%;object-fit:cover;border-radius:32px;display:block;background:var(--ink);box-shadow:0 30px 70px #0003}
+.video-tag{position:absolute;top:-22px;right:-20px;width:110px;height:110px;border-radius:50%;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;text-align:center;font-size:9px;font-weight:900;letter-spacing:1px;transform:rotate(12deg);z-index:5;pointer-events:none}
+/* MESSAGE */
+.message{background:var(--cream);min-height:650px;padding:125px 8%;position:relative;overflow:hidden}
+.message-number{position:absolute;top:50px;right:8%;font-size:10px;font-weight:900;letter-spacing:3px}
+.message-inner{max-width:1000px;position:relative;z-index:2}
+.message h2{font-family:"Bebas Neue",sans-serif;font-size:clamp(70px,9vw,140px);line-height:.83;letter-spacing:-2px}
+.message h2 span{color:var(--orange)}
+.message-text{max-width:650px;margin-top:42px;font-size:16px;line-height:1.9;color:#444}
+.signature{margin-top:30px;font-family:"Bebas Neue",sans-serif;font-size:38px;color:var(--orange)}
+.message-decoration{position:absolute;right:-100px;bottom:-100px;width:430px;height:430px;background:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.message-decoration span{font-size:150px}
+.prayer-note{margin-top:32px;max-width:650px;padding:20px 23px;border-left:3px solid var(--orange);background:#fffaf2;color:#444;font-size:13px;line-height:1.8}
+.prayer-note strong{display:block;color:var(--ink);font-size:10px;letter-spacing:2px;margin-bottom:8px}
+/* FOOTER */
+footer{background:var(--ink);color:white;padding:65px 7% 30px;text-align:center}
+.footer-logo{font-family:"Bebas Neue",sans-serif;font-size:75px;line-height:1}
+.footer-logo span{color:var(--orange)}
+footer p{margin-top:18px;color:#aaa;font-size:12px;line-height:1.7}
+.footer-bottom{margin-top:45px;padding-top:20px;border-top:1px solid #292929;font-size:9px;letter-spacing:2px;color:#777}
+/* MODAL */
+.modal{position:fixed;inset:0;background:#000e;z-index:1000;display:flex;align-items:center;justify-content:center;padding:25px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.modal.active{opacity:1;visibility:visible}
+.modal img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:12px}
+.modal-close{position:absolute;right:22px;top:20px;width:45px;height:45px;border-radius:50%;border:1px solid white;color:white;background:#111;font-size:25px;cursor:pointer}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){
+ .navbar nav{display:none}.menu-btn{display:flex}
+ .hero{min-height:970px;padding:120px 6% 70px;align-items:flex-start}
+ .hero-content{width:100%}.hero h1{font-size:clamp(75px,16vw,135px)}
+ .hero-description{width:80%}.hero-image-wrapper{width:78%;height:360px;right:10%;bottom:90px}
+ .piece-one{right:5%;top:28%}.piece-three{display:none}
+ .hero-bottom-text{font-size:7px;letter-spacing:2px}
+ .intro{padding:100px 7%;min-height:620px}.intro-chicken{width:280px;height:280px;right:-90px}.intro-chicken div{font-size:115px}
+ .promises{padding:90px 6%}.promise-grid{grid-template-columns:1fr 1fr}.promise-card:last-child{grid-column:span 2;min-height:250px}
+ .section-heading{display:block}.section-heading>p{margin-top:25px}
+ .gallery{grid-template-columns:1fr 1fr}.gallery-item:nth-child(n){grid-column:span 1;height:330px}.gallery-item:nth-child(1){grid-column:span 2;height:420px}
+ .video-container{height:55vw;min-height:350px}.message-decoration{width:320px;height:320px}.message-decoration span{font-size:110px}
+}
+@media(max-width:600px){
+ .navbar{padding:18px 6%}.hero{min-height:850px;border-radius:0 0 28px 28px;padding-top:110px}
+ .hero h1{font-size:clamp(72px,17vw,90px);letter-spacing:-2px}.hero-description{font-size:13px;width:100%;max-width:300px;margin-top:22px}
+ .hero-actions{gap:14px;margin-top:24px}.main-btn{padding:12px 14px 12px 17px;font-size:8px;gap:10px}.birthday-badge{width:66px;height:66px}.badge-inner{width:51px;height:51px;font-size:7px}
+ .hero-image-wrapper{width:86%;right:7%;height:270px;bottom:82px}.image-label{right:-8px;top:18px;padding:9px 12px}
+ .floating-piece{font-size:42px}.piece-two{font-size:53px}.hero-bottom-text{left:6%;right:6%;font-size:6px;letter-spacing:1.5px}
+ .marquee span{font-size:38px}.intro{min-height:610px;padding:90px 7%}.section-number{top:35px}
+ .intro h2{font-size:clamp(56px,12vw,72px)}.intro-content>p:last-child{font-size:14px;line-height:1.75}
+ .intro-chicken{width:210px;height:210px;right:-115px;bottom:-70px}.intro-chicken div{font-size:78px}
+ .promises{padding:80px 6%}.promises-header{margin-bottom:35px}.promises-header>p:last-child{font-size:14px}
+ .promises h2{font-size:clamp(48px,11vw,68px)}.promise-feature{padding:45px 7%;border-radius:20px}.promise-feature blockquote{font-size:34px}
+ .promise-grid{grid-template-columns:1fr}.promise-card,.promise-card:last-child{grid-column:auto;min-height:260px;padding:25px}
+ .moments,.video-section,.message{padding:80px 6%}.section-heading h2{font-size:clamp(65px,14vw,82px)}
+ .gallery{grid-template-columns:1fr;gap:14px}.gallery-item:nth-child(n),.gallery-item:nth-child(1){grid-column:span 1;height:350px}.gallery-overlay{opacity:1}
+ .video-title h2{font-size:clamp(68px,15vw,85px)}.video-container{height:440px;min-height:0}.video-container video{border-radius:20px}.video-tag{width:78px;height:78px;right:-4px;top:-17px;font-size:7px}
+ .message{min-height:690px}.message-number{top:35px;right:6%;font-size:8px}.message h2{font-size:clamp(68px,15vw,88px)}
+ .message-text{font-size:14px;line-height:1.8}.message-decoration{width:220px;height:220px;right:-125px;bottom:-80px}.message-decoration span{font-size:80px}
+ .footer-logo{font-size:60px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<div class="loader" id="loader" aria-label="Chargement de la surprise">
+  <div class="loader-chicken" aria-hidden="true">🍗</div>
+  <p>Préparation de la surprise...</p>
+</div>
+
+<header class="navbar">
+  <a href="#accueil" class="logo"><span class="logo-dot"></span> ELISA'S</a>
+  <nav aria-label="Navigation principale">
+    <a href="#accueil">ACCUEIL</a><a href="#promesses">PROMESSES</a><a href="#moments">MOMENTS</a><a href="#video">VIDÉO</a><a href="#message">MESSAGE</a>
+  </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Navigation mobile" inert>
+  <a href="#accueil">ACCUEIL</a><a href="#promesses">PROMESSES</a><a href="#moments">MOMENTS</a><a href="#video">VIDÉO</a><a href="#message">MESSAGE</a>
+</nav>
+
+<main id="contenu">
+<section class="hero" id="accueil">
+  <div class="spark spark-1"></div><div class="spark spark-2"></div><div class="spark spark-3"></div><div class="spark spark-4"></div>
+  <div class="floating-piece piece-one" aria-hidden="true">🍗</div><div class="floating-piece piece-two" aria-hidden="true">🍗</div><div class="floating-piece piece-three" aria-hidden="true">🍗</div>
+  <div class="hero-content">
+    <div class="mini-title">TODAY'S SPECIAL <span></span> ELISA</div>
+    <h1>HAPPY <span>BIRTHDAY</span><strong>ELISA</strong></h1>
+    <p class="hero-description">Aujourd'hui, la star n'est pas le poulet... c'est toi, Elisa. Une nouvelle année, de nouveaux souvenirs et toujours plus de raisons de rendre grâce à Dieu.</p>
+    <div class="hero-actions">
+      <a href="#moments" class="main-btn">DÉCOUVRIR LA SURPRISE <span aria-hidden="true">↗</span></a>
+      <div class="birthday-badge" aria-label="100 pour cent Elisa"><div class="badge-inner">100%<br>ELISA</div></div>
+    </div>
+  </div>
+  <div class="hero-image-wrapper">
+    <div class="image-shadow"></div>
+    <!-- Remplace photo1.jpg par le nom exact de ta photo -->
+    <img src="photo1.jpg" alt="Portrait d'Elisa" class="hero-image" fetchpriority="high">
+    <div class="image-label"><span>MADE WITH</span><strong>LOVE & FAITH</strong></div>
+  </div>
+  <div class="hero-bottom-text"><span>GRACE</span><span>JOY</span><span>UNFORGETTABLE</span></div>
+</section>
+
+<section class="marquee" aria-label="Vœux d'anniversaire">
+  <div class="marquee-track" aria-hidden="true">
+    <span>HAPPY BIRTHDAY ELISA</span><i>✦</i><span>GOD BLESS YOU</span><i>✦</i><span>HAPPY BIRTHDAY ELISA</span><i>✦</i><span>GOD BLESS YOU</span><i>✦</i>
+    <span>HAPPY BIRTHDAY ELISA</span><i>✦</i><span>GOD BLESS YOU</span><i>✦</i><span>HAPPY BIRTHDAY ELISA</span><i>✦</i><span>GOD BLESS YOU</span><i>✦</i>
+  </div>
+</section>
+
+<section class="intro">
+  <div class="section-number">01 / WHY ELISA</div>
+  <div class="intro-content reveal">
+    <p class="eyebrow">THE ELISA EXPERIENCE</p>
+    <h2>Une journée qui mérite <span>une vraie célébration.</span></h2>
+    <p>Aujourd'hui, on ne célèbre pas simplement une date. On célèbre une personne, ses sourires, son énergie, ses souvenirs et toutes les belles choses qui rendent Elisa unique. Que cette nouvelle année soit remplie d'amour, de paix et de la présence de Dieu.</p>
+  </div>
+  <div class="intro-chicken" aria-hidden="true"><div>🍗</div></div>
+</section>
+
+<section class="promises" id="promesses">
+  <div class="promises-header reveal">
+    <p class="eyebrow">02 / HIS WORD, HER FUTURE</p>
+    <h2>UNE ANNÉE DE PLUS.<br><span>UNE GRÂCE DE PLUS.</span></h2>
+    <p>Au-delà des cadeaux et des célébrations, voici quelques paroles bibliques à garder dans ton cœur pour cette nouvelle année, Elisa. Que la Parole de Dieu éclaire tes pas et fortifie ton espérance.</p>
+  </div>
+  <div class="promise-feature reveal">
+    <span class="promise-cross" aria-hidden="true">✝</span>
+    <p class="promise-label">UNE PAROLE POUR TON NOUVEAU CHAPITRE</p>
+    <blockquote>« Voici le jour que l'Éternel a fait : qu'il soit pour nous un sujet d'allégresse et de joie ! »</blockquote>
+    <p class="promise-reference">PSAUME 118:24</p>
+    <div class="promise-number" aria-hidden="true">01</div>
+  </div>
+  <div class="promise-grid">
+    <article class="promise-card reveal">
+      <span class="promise-index">PROMESSE / 01</span><span class="promise-symbol" aria-hidden="true">✦</span>
+      <h3>TON AVENIR EST ENTRE SES MAINS.</h3>
+      <p>« Car moi, je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance. »</p>
+      <span class="promise-reference">JÉRÉMIE 29:11</span>
+    </article>
+    <article class="promise-card promise-card-dark reveal">
+      <span class="promise-index">PROMESSE / 02</span><span class="promise-symbol" aria-hidden="true">✦</span>
+      <h3>SA GRÂCE SE RENOUVELLE.</h3>
+      <p>« Elles se renouvellent chaque matin. Oh ! que ta fidélité est grande ! »</p>
+      <span class="promise-reference">LAMENTATIONS 3:23</span>
+    </article>
+    <article class="promise-card reveal">
+      <span class="promise-index">PROMESSE / 03</span><span class="promise-symbol" aria-hidden="true">✦</span>
+      <h3>QUE DIEU TE GARDE ET TE BÉNISSE.</h3>
+      <p>« Que l'Éternel te bénisse, et qu'il te garde ! Que l'Éternel fasse luire sa face sur toi, et qu'il t'accorde sa grâce ! »</p>
+      <span class="promise-reference">NOMBRES 6:24-25</span>
+    </article>
+  </div>
+  <p class="promises-footer">NEW AGE. NEW MERCIES. SAME FAITHFUL GOD.</p>
+</section>
+
+<section class="moments" id="moments">
+  <div class="section-heading reveal">
+    <div><p class="eyebrow">SIX SPECIAL MOMENTS</p><h2>ELISA <span>EN IMAGES.</span></h2></div>
+    <p>Six souvenirs, six sourires et suffisamment de raisons pour célébrer cette magnifique journée. Clique sur une photo pour l'agrandir.</p>
+  </div>
+  <div class="gallery">
+    <button class="gallery-item reveal" type="button" aria-label="Agrandir la photo 1"><img src="photo1.jpg" alt="Souvenir d'Elisa : le sourire" loading="lazy"><span class="gallery-overlay"><span>MOMENT #01 — LE SOURIRE</span></span></button>
+    <button class="gallery-item reveal" type="button" aria-label="Agrandir la photo 2"><img src="photo2.jpg" alt="Souvenir d'Elisa : la star" loading="lazy"><span class="gallery-overlay"><span>MOMENT #02 — LA STAR</span></span></button>
+    <button class="gallery-item reveal" type="button" aria-label="Agrandir la photo 3"><img src="photo3.jpg" alt="Souvenir d'Elisa : good vibes" loading="lazy"><span class="gallery-overlay"><span>MOMENT #03 — GOOD VIBES</span></span></button>
+    <button class="gallery-item reveal" type="button" aria-label="Agrandir la photo 4"><img src="photo4.jpg" alt="Souvenir d'Elisa : iconic" loading="lazy"><span class="gallery-overlay"><span>MOMENT #04 — ICONIC</span></span></button>
+    <button class="gallery-item reveal" type="button" aria-label="Agrandir la photo 5"><img src="photo5.jpg" alt="Souvenir d'Elisa : pure joy" loading="lazy"><span class="gallery-overlay"><span>MOMENT #05 — PURE JOY</span></span></button>  </div>
+</section>
+
+<section class="video-section" id="video">
+  <div class="video-title reveal"><p class="eyebrow">ONE SPECIAL VIDEO</p><h2>ELISA<br>ON CAMERA.</h2></div>
+  <div class="video-container reveal">
+    <!-- Place ta vidéo dans le même dossier et nomme-la video.mp4 -->
+    <video id="birthdayVideo" autoplay muted loop playsinline controls preload="metadata" poster="photo1.jpg">
+      <source src="video.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo.
+    </video>
+    <div class="video-tag" aria-hidden="true">PRESS PLAY<br>FOR<br>ELISA</div>
+  </div>
+</section>
+
+<section class="message" id="message">
+  <div class="message-number">04 / FINAL MESSAGE</div>
+  <div class="message-inner reveal">
+    <p class="eyebrow">TO THE BIRTHDAY GIRL</p>
+    <h2>QUE TA VIE <span>RESTE AUSSI BELLE</span> QUE TON SOURIRE.</h2>
+    <p class="message-text">Elisa, aujourd'hui est ton jour. Que cette nouvelle année de ta vie soit remplie de bonheur, de belles surprises, de réussite, de paix et de moments que tu n'oublieras jamais.<br><br>Continue de sourire, de rêver, d'avancer et surtout de rester la personne unique que tu es. Que Dieu t'accorde la sagesse dans tes décisions, la force dans les jours difficiles et la joie dans chaque nouvelle saison.</p>
+    <div class="prayer-note"><strong>UNE PRIÈRE POUR TOI</strong>Seigneur, merci pour la vie d'Elisa. Bénis cette nouvelle année, guide ses pas, protège son cœur et entoure-la de personnes qui l'aiment sincèrement. Accorde-lui la paix, la santé, la sagesse et le courage de poursuivre les rêves que Tu as déposés en elle. Que Ta présence l'accompagne chaque jour. Amen.</div>
+    <div class="signature">HAPPY BIRTHDAY, ELISA.</div>
+  </div>
+  <div class="message-decoration" aria-hidden="true"><span>🍗</span></div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-logo">ELISA'S <span>DAY.</span></div>
+  <p>Une journée spéciale pour une personne spéciale.<br>Que la grâce de Dieu t'accompagne aujourd'hui et toujours.</p>
+  <div class="footer-bottom">MADE WITH LOVE & FAITH FOR ELISA · 2026</div>
+</footer>
+
+<div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Photo agrandie" aria-hidden="true">
+  <button class="modal-close" id="modalClose" type="button" aria-label="Fermer la photo">×</button>
+  <img id="modalImage" src="" alt="Photo agrandie d'Elisa">
+</div>
+
+<script>
+const loader = document.getElementById("loader");
+window.addEventListener("load", () => {
+  window.setTimeout(() => loader.classList.add("hide"), 650);
+});
+window.setTimeout(() => loader.classList.add("hide"), 2500);
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+function closeMenu() {
+  mobileMenu.classList.remove("open");
+  mobileMenu.setAttribute("inert", "");
+  menuBtn.setAttribute("aria-expanded", "false");
+  menuBtn.setAttribute("aria-label", "Ouvrir le menu");
+}
+menuBtn.addEventListener("click", () => {
+  const isOpen = mobileMenu.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(isOpen));
+  menuBtn.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+  if (isOpen) mobileMenu.removeAttribute("inert");
+  else mobileMenu.setAttribute("inert", "");
+});
+mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+
+const modal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+const modalClose = document.getElementById("modalClose");
+let previousFocus = null;
+function closeModal() {
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  modalImage.src = "";
+  if (previousFocus) previousFocus.focus();
+}
+document.querySelectorAll(".gallery-item").forEach(item => {
+  item.addEventListener("click", () => {
+    const image = item.querySelector("img");
+    previousFocus = item;
+    modalImage.src = image.currentSrc || image.src;
+    modalImage.alt = image.alt;
+    modal.classList.add("active");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    modalClose.focus();
+  });
+});
+modalClose.addEventListener("click", closeModal);
+modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") { closeModal(); closeMenu(); }
+  if (event.key === "Tab" && modal.classList.contains("active")) {
+    event.preventDefault();
+    modalClose.focus();
+  }
+});
+
+const video = document.getElementById("birthdayVideo");
+video.muted = true;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (prefersReducedMotion) video.pause();
+else video.play().catch(() => { /* Le navigateur peut demander une action de l'utilisateur. */ });
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+
+  const videoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (prefersReducedMotion) return;
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    });
+  }, { threshold: 0.25 });
+  videoObserver.observe(video);
+} else {
+  document.querySelectorAll(".reveal").forEach(element => element.classList.add("visible"));
+}
+
+if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+  document.addEventListener("mousemove", event => {
+    const x = (window.innerWidth / 2 - event.clientX) / 65;
+    const y = (window.innerHeight / 2 - event.clientY) / 65;
+    document.querySelectorAll(".floating-piece").forEach((piece, index) => {
+      const factor = (index + 1) * 0.45;
+      piece.style.marginLeft = `${x * factor}px`;
+      piece.style.marginTop = `${y * factor}px`;
+    });
+  }, { passive: true });
+}
+</script>
+</body>
+</html>
